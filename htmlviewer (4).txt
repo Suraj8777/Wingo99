@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic-Tac-Toe with AI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+    }
+    .game-container {
+      text-align: center;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 5px;
+      margin: 20px auto;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      font-weight: bold;
+      background-color: #fff;
+      border: 2px solid #333;
+      cursor: pointer;
+    }
+    .cell.disabled {
+      cursor: not-allowed;
+      background-color: #ddd;
+    }
+    .status {
+      margin-top: 20px;
+      font-size: 1.5rem;
+    }
+    .reset-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>Tic-Tac-Toe with AI</h1>
+    <div class="board">
+      <div class="cell" data-index="0"></div>
+      <div class="cell" data-index="1"></div>
+      <div class="cell" data-index="2"></div>
+      <div class="cell" data-index="3"></div>
+      <div class="cell" data-index="4"></div>
+      <div class="cell" data-index="5"></div>
+      <div class="cell" data-index="6"></div>
+      <div class="cell" data-index="7"></div>
+      <div class="cell" data-index="8"></div>
+    </div>
+    <div class="status">Your Turn (X)</div>
+    <button class="reset-button" onclick="resetGame()">Reset Game</button>
+  </div>
+
+  <script>
+    const board = document.querySelector('.board');
+    const cells = document.querySelectorAll('.cell');
+    const statusText = document.querySelector('.status');
+    let currentPlayer = 'X';
+    let gameActive = true;
+    let gameState = ['', '', '', '', '', '', '', '', ''];
+
+    const winningConditions = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+      [0, 4, 8], [2, 4, 6]             // Diagonals
+    ];
+
+    // Handle cell click
+    function handleCellClick(event) {
+      const clickedCell = event.target;
+      const clickedCellIndex = parseInt(clickedCell.getAttribute('data-index'));
+
+      if (gameState[clickedCellIndex] !== '' || !gameActive) return;
+
+      placeMark(clickedCell, clickedCellIndex, currentPlayer);
+      if (checkWin(currentPlayer)) {
+        statusText.textContent = `Player ${currentPlayer} Wins!`;
+        gameActive = false;
+        return;
+      }
+
+      if (checkDraw()) {
+        statusText.textContent = 'Draw!';
+        gameActive = false;
+        return;
+      }
+
+      currentPlayer = 'O';
+      statusText.textContent = "AI's Turn (O)";
+      setTimeout(aiMove, 500); // AI makes a move after a short delay
+    }
+
+    // Place mark on the board
+    function placeMark(cell, index, player) {
+      gameState[index] = player;
+      cell.textContent = player;
+      cell.classList.add('disabled');
+    }
+
+    // Check for a win
+    function checkWin(player) {
+      return winningConditions.some(condition => {
+        return condition.every(index => gameState[index] === player);
+      });
+    }
+
+    // Check for a draw
+    function checkDraw() {
+      return gameState.every(cell => cell !== '');
+    }
+
+    // AI makes a random move
+    function aiMove() {
+      if (!gameActive) return;
+
+      let availableCells = gameState.map((cell, index) => cell === '' ? index : null).filter(index => index !== null);
+      const randomCellIndex = availableCells[Math.floor(Math.random() * availableCells.length)];
+
+      placeMark(cells[randomCellIndex], randomCellIndex, 'O');
+      if (checkWin('O')) {
+        statusText.textContent = 'AI Wins!';
+        gameActive = false;
+        return;
+      }
+
+      if (checkDraw()) {
+        statusText.textContent = 'Draw!';
+        gameActive = false;
+        return;
+      }
+
+      currentPlayer = 'X';
+      statusText.textContent = "Your Turn (X)";
+    }
+
+    // Reset the game
+    function resetGame() {
+      gameState = ['', '', '', '', '', '', '', '', ''];
+      gameActive = true;
+      currentPlayer = 'X';
+      statusText.textContent = 'Your Turn (X)';
+      cells.forEach(cell => {
+        cell.textContent = '';
+        cell.classList.remove('disabled');
+      });
+    }
+
+    // Add event listeners to cells
+    cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+  </script>
+</body>
+</html>

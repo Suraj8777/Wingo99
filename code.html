@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire-Like Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Luckiest+Guy&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('lobby_background.jpg'); /* Replace with your background image */
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+             transition: background-color 0.3s ease;
+        }
+
+         .game-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+             margin-bottom: 20px;
+        }
+
+        h1 {
+             font-family: 'Luckiest Guy', cursive;
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px #000, -2px -2px 4px #000;
+              transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+         h1:hover{
+              color: #e74c3c;
+             text-shadow: 3px 3px 6px #000, -3px -3px 6px #000;
+        }
+
+      nav {
+           margin-bottom: 20px;
+        }
+        .menu-button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background-color: #e74c3c;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px #000;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .menu-button:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+        }
+
+         .menu-button:focus {
+            outline: none;
+        }
+
+          .menu-button:active {
+            transform: scale(0.95);
+             box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+         .character-container {
+            display: flex;
+            justify-content: space-around;
+             align-items: center;
+            width: 80%;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+         .character-card {
+            display: flex;
+            flex-direction: column;
+             align-items: center;
+        }
+
+        .character {
+            max-width: 150px;
+            height: auto;
+            border: 2px solid #e74c3c;
+            border-radius: 5px;
+              transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+       .character:hover{
+           transform: scale(1.1);
+          box-shadow: 0px 0px 10px #fff;
+       }
+
+        .game-logo {
+             max-width: 150px;
+            height: auto;
+        }
+        /* AI animation container */
+      .ai-animation-container {
+            width: 300px;
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.1); /*Placeholder for animation*/
+            margin-bottom: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+             text-align: center;
+        }
+
+        /* AI creator container */
+        .ai-creator-container {
+            width: 500px;
+            background-color: rgba(255, 255, 255, 0.05);/* Placeholder for creator*/
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+
+        }
+        .ai-creator-container input,
+        .ai-creator-container button {
+            margin-bottom: 10px;
+             padding: 10px;
+            border: none;
+             background-color: #e74c3c;
+             color: white;
+            border-radius: 5px;
+            font-size: 1.1em;
+
+        }
+         .ai-creator-container input:focus {
+            outline: none;
+            border: 2px solid black;
+        }
+        .ai-creator-container button:hover{
+            background-color: #c0392b;
+            cursor: pointer;
+        }
+        .ai-creator-container button:active{
+             transform: scale(0.95);
+        }
+
+
+        /* AI Lobby */
+        .ai-lobby-container {
+            width: 600px;
+            background-color: rgba(255, 255, 255, 0.05); /*Placeholder for lobby*/
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+             box-shadow: 2px 2px 5px #000;
+        }
+        .ai-lobby-container ul {
+             list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .ai-lobby-container li {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin-bottom: 5px;
+             border-radius: 5px;
+        }
+        /* Anime Creator */
+        .anime-creator-container {
+            width: 500px;
+            background-color: rgba(255, 255, 255, 0.05); /* Placeholder */
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .anime-creator-container select {
+              margin-bottom: 10px;
+               padding: 10px;
+                border: none;
+                 background-color: #e74c3c;
+                 color: white;
+                border-radius: 5px;
+                 font-size: 1.1em;
+             }
+         .anime-creator-container select:focus {
+            outline: none;
+             border: 2px solid black;
+         }
+        /*Bag Container */
+        .bag-container {
+          width: 250px;
+          padding: 20px;
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 10px;
+          text-align: center;
+          margin-bottom: 20px;
+           box-shadow: 2px 2px 5px #000;
+
+        }
+         .bag-container ul{
+             list-style-type: none;
+             text-align: left;
+        }
+        .bag-container li{
+             background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin-bottom: 5px;
+             border-radius: 5px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <img class="game-logo" src="game_logo.png" alt="Game Logo">
+            <h1>Free Fire-Like Game</h1>
+        </div>
+         <div class="ai-animation-container">
+            <!-- Placeholder for AI animation -->
+            <p>AI Animation Here</p>
+        </div>
+          <div class="bag-container">
+            <h3>Bag</h3>
+            <ul>
+                <li><i class="fas fa-flask"></i> Item 1</li>
+               <li><i class="fas fa-gem"></i> Item 2</li>
+               <li><i class="fas fa-shield-alt"></i> Item 3</li>
+            </ul>
+        </div>
+
+        <div class="character-container">
+              <div class="character-card">
+                 <img class="character" src="character1.png" alt="Character 1">
+                 <p>Character 1</p>
+              </div>
+             <div class="character-card">
+                 <img class="character" src="character2.png" alt="Character 2">
+                  <p>Character 2</p>
+              </div>
+            <div class="character-card">
+                <img class="character" src="character3.png" alt="Character 3">
+                <p>Character 3</p>
+             </div>
+        </div>
+         <nav>
+             <button class="menu-button"> <i class="fas fa-play"></i> Start Game</button>
+            <button class="menu-button"><i class="fas fa-cog"></i> Settings</button>
+            <button class="menu-button"><i class="fas fa-robot"></i> AI Creator</button>
+           <button class="menu-button"><i class="fas fa-paint-brush"></i> Anime Creator</button>
+           <button class="menu-button"> <i class="fas fa-store"></i> Store</button>
+           <button class="menu-button"> <i class="fas fa-sign-out-alt"></i> Quit</button>
+         </nav>
+
+          <div class="ai-creator-container">
+            <h3>AI Character Creator</h3>
+             <input type="text" placeholder="Enter Character Name">
+            <button onclick="logName()">Create Character</button>
+          </div>
+         <div class="anime-creator-container">
+            <h3>Anime Character Creator</h3>
+           <select id = "hairStyle">
+              <option value="hair1">Hair Style 1</option>
+             <option value="hair2">Hair Style 2</option>
+             <option value="hair3">Hair Style 3</option>
+          </select>
+           <select id = "faceType">
+               <option value="face1">Face Type 1</option>
+               <option value="face2">Face Type 2</option>
+             <option value="face3">Face Type 3</option>
+           </select>
+        </div>
+
+          <div class="ai-lobby-container">
+           <h3>AI Lobby</h3>
+            <ul>
+               <li><i class="fas fa-user"></i> Player 1 joined the lobby.</li>
+                <li> <i class="fas fa-user-clock"></i> Player 2 is waiting.</li>
+                <li> <i class="fas fa-stopwatch"></i> A match is starting in 10 seconds...</li>
+            </ul>
+         </div>
+    </div>
+ <script>
+      function logName(){
+          const name = document.querySelector('.ai-creator-container input').value;
+          console.log("Name Entered: " + name);
+       }
+        const hairStyleSelect = document.querySelector('#hairStyle');
+       hairStyleSelect.addEventListener('change', (event) => {
+           console.log('Selected Hair Style: ' + event.target.value)
+       })
+        const faceTypeSelect = document.querySelector('#faceType');
+        faceTypeSelect.addEventListener('change', (event) => {
+           console.log('Selected Face Type: ' + event.target.value)
+       })
+  </script>
+</body>
+</html>
